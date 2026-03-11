@@ -1,0 +1,27 @@
+name = "PostDisciplinary"
+uuid = "f1a9a0dc-9df1-4c08-8f01-4f9031796370"
+authors = ["Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>"]
+version = "0.1.0"
+license = "MPL-2.0"
+
+[deps]
+Graphs = "86223c79-3864-5bf0-83f7-82e725a168b6"
+MetaGraphsNext = "fa8bd995-216d-47f1-8a91-f3b68fbeb377"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
+Dagger = "d58978e5-989f-55fb-8d15-ea34adc7bf54"
+UUIDs = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
+
+[compat]
+julia = "1.10"
+Graphs = "1"
+MetaGraphsNext = "0.7"
+DataFrames = "1"
+JSON3 = "1"
+Dagger = "0.18"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
