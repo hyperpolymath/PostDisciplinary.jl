@@ -1,18 +1,18 @@
-# SPDX-License-Identifier: PMPL-1.0-or-later
-# Copyright (c) {{CURRENT_YEAR}} {{AUTHOR}} ({{OWNER}}) <{{AUTHOR_EMAIL}}>
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (c) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
 #
 # STATE.a2ml — Project state checkpoint
-# Replace {{PROJECT_NAME}} and customize sections below.
+# Replace PostDisciplinary.jl and customize sections below.
 
 [metadata]
-project = "{{PROJECT_NAME}}"
+project = "PostDisciplinary.jl"
 version = "0.1.0"
-last-updated = "{{CURRENT_DATE}}"
+last-updated = "2026-03-14"
 status = "active"  # active | paused | archived
 
 [project-context]
-name = "{{PROJECT_NAME}}"
-purpose = "{{PROJECT_PURPOSE}}"
+name = "PostDisciplinary.jl"
+purpose = "Meta-framework for post-disciplinary research synthesis"
 completion-percentage = 0
 
 [position]

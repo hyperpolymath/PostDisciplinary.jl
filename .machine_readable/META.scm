@@ -1,4 +1,5 @@
-;; SPDX-License-Identifier: PMPL-1.0-or-later
+;; SPDX-License-Identifier: MPL-2.0
+;; (PMPL-1.0-or-later preferred; MPL-2.0 required for Julia ecosystem)
 ;; META.scm for PostDisciplinary.jl
 
 (define meta
@@ -6,7 +7,7 @@
      (name . "PostDisciplinary.jl")
      (tagline . "Meta-framework for post-disciplinary research synthesis")
      (category . "research")
-     (license . "PMPL-1.0-or-later")
+     (license . "MPL-2.0")
      (inception-date . "2026")
      (repository . "https://github.com/hyperpolymath/PostDisciplinary.jl"))
     (development-practices
