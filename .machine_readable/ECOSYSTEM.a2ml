@@ -1,25 +1,10 @@
-# SPDX-License-Identifier: MPL-2.0
-# Copyright (c) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
-#
-# ECOSYSTEM.a2ml — Project ecosystem position
-# Relationships, dependencies, integration points.
+# SPDX-License-Identifier: PMPL-1.0-or-later
+# ECOSYSTEM.a2ml — Ecosystem position
+# Converted from ECOSYSTEM.scm on 2026-03-15
 
 [metadata]
-version = "0.1.0"
-last-updated = "2026-03-14"
+project = "PostDisciplinary.jl"
+ecosystem = "hyperpolymath"
 
-[project]
-name = "PostDisciplinary.jl"
-purpose = "Meta-framework for post-disciplinary research synthesis"
-role = "library"
-
-[position-in-ecosystem]
-tier = "2"
-
-[related-projects]
-# relationship types: sibling-standard, dependency, dependent, inspiration, potential-consumer
-# - { name = "hyperpolymath ecosystem", relationship = "part-of" }
-
-[integration-points]
-# External systems this project connects to
-# - { system = "gitbot-fleet", direction = "outbound", protocol = "repository_dispatch" }
+[position]
+type = "component"

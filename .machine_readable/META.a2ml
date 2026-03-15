@@ -1,28 +1,9 @@
-# SPDX-License-Identifier: MPL-2.0
-# Copyright (c) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
-#
-# META.a2ml — Project meta-level information
-# Architecture decisions, design rationale, governance.
+# SPDX-License-Identifier: PMPL-1.0-or-later
+# META.a2ml — Project meta-information
+# Converted from META.scm on 2026-03-15
 
 [metadata]
-version = "0.1.0"
-last-updated = "2026-03-14"
-
-[project-info]
-type = "library"  # library | binary | monorepo | service | website
-languages = []             # e.g. ["rust", "zig", "idris2"]
+project = "PostDisciplinary.jl"
+author = "Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>"
 license = "PMPL-1.0-or-later"
-author = "Jonathan D.A. Jewell (hyperpolymath)"
-
-[architecture-decisions]
-# ADR format: status = proposed | accepted | deprecated | superseded | rejected
-# - { id = "ADR-001", title = "Use Zig for FFI", status = "accepted", date = "2026-02-14" }
-
-[development-practices]
-build-tool = "just"
-container-runtime = "podman"
-ci-platform = "github-actions"
-package-manager = "guix"  # guix | nix | cargo | mix
-
-[design-rationale]
-# Key design decisions and their reasoning
+standard = "RSR 2026"
