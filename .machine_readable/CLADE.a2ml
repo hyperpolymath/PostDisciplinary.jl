@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: PMPL-1.0-or-later
+# Clade declaration — part of the gv-clade-index registry
+# See: https://github.com/hyperpolymath/gv-clade-index
+
+[identity]
+uuid = "6f7cc69b-2432-592c-80ee-ba06c6bb6b12"
+primary-forge = "github"
+primary-owner = "hyperpolymath"
+canonical-name = "PostDisciplinary.jl"
+prefixed-name = "dx-PostDisciplinary.jl"
+
+[clade]
+primary = "dx"
+secondary = []
+assigned = "2026-03-16"
+rationale = ""
+
+[forges]
+github = "hyperpolymath/PostDisciplinary.jl"
+gitlab = "hyperpolymath/PostDisciplinary.jl"
+bitbucket = "hyperpolymath/PostDisciplinary.jl"
+
+[lineage]
+type = "standalone"
+parent = "Julia package — post-disciplinary research tools"
+born = "2026-03-16"
