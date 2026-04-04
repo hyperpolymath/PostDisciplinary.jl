@@ -3,42 +3,94 @@
 :toc:
 :icons: font
 
-The README makes claims. This file backs them up.
+The README makes claims. This file backs them up with code paths and data structures.
 
-[quote, README]
+== Claim 1: Universal Ontology Linking Entities Across Disciplines
+
+From README:
 ____
-PostDisciplinary.jl is a meta-framework designed to support research that doesn't fit into a single "department." It provides the glue logic to connect formal logic, historical dynamics, social theory, and computer science into a single, cohesive research artifact. It is the "orchestrator" for the Hyperpolymath ecosystem.
+Universal Ontology: A common data schema for linking "Entities" (People, Events, Proofs, Claims) across all Hyperpolymath libraries.
 ____
+
+**How it's proven:**
+- **Core struct**: `LinkedEntity` defined at line 78-88 in `src/PostDisciplinary.jl` with fields: `id::UUID`, `source_library::Symbol`, `original_id::Symbol`, `kind::Symbol`, `metadata::Dict{Symbol, Any}`
+- **Graph container**: `ResearchProject` (lines 94-108) wraps a `MetaGraph` where vertices are `LinkedEntity` objects with cross-disciplinary relationships
+- **Linking operations**: `add_link!(project, entity1, entity2, rel)` at line 126 establishes edges between entities from different libraries with relationship metadata
+- **Synthesis**: `generate_synthesis(project)` at line 137 extracts all entities, groups by `source_library` and `kind`, computes graph density
+- **Key path**: All modules (`memetics.jl`, `meta_analysis.jl`, `methodology.jl`) inherit from this ontology via UUID-keyed entity IDs
+
+**Caveat:** The `@link` macro (lines 115-120) is syntactic sugar only—it echoes progress messages but does not yet validate entity type compatibility or enforce cross-library interface contracts.
+
+== Claim 2: Meta-Analysis with Effect Size Aggregation and Heterogeneity Testing
+
+From README:
+____
+Integrated Research Graphs: Link evidence from InvestigativeJournalist.jl with models from Cliodynamics.jl. Cross-Theory Verification: Verify a social value from Axiology.jl using a formal proof in Axiom.jl.
+____
+
+**How it's proven:**
+- **Meta-analysis module**: `src/meta_analysis.jl` implements effect size aggregation and heterogeneity (Q-statistic) testing
+- **Exports**: `EffectSize`, `aggregate_effects`, `heterogeneity_q` at line 63
+- **Integration path**: `MetaAnalysis` submodule is imported (line 47) and used by orchestration workflows
+- **Storage integration**: `VeriSimBridge` (line 36) and `LithoglyphBridge` (line 37) provide persistence bridges to VeriSimDB and Lithoglyph storage systems
+
+**Caveat:** Actual implementations of aggregation algorithms and Q-statistic calculation are currently minimal stubs. The framework for connecting to external evidence repositories (InvestigativeJournalist.jl, Cliodynamics.jl) is defined but integration is incomplete.
 
 == Technology Choices
 
 [cols="1,2"]
 |===
-| Technology | Learn More
+| Technology | Purpose
 
-| **Zig** | https://ziglang.org
-| **Julia** | https://julialang.org
-| **Idris2 ABI** | https://www.idris-lang.org
+| **Julia** | Core orchestration, entity linking, graph synthesis
+| **Graphs.jl + MetaGraphsNext.jl** | Cross-disciplinary entity graphs with metadata on edges and vertices
+| **DataFrames.jl** | Tabular synthesis of heterogeneous findings
+| **VeriSimDB** | Persistent knowledge store for formal proofs and models
+| **Lithoglyph** | Symbol and glyph storage for post-disciplinary notation systems
 |===
 
 == Dogfooded Across The Account
 
-Uses the hyperpolymath ABI/FFI standard (Idris2 + Zig). Same pattern used across
-https://github.com/hyperpolymath/proven[proven],
-https://github.com/hyperpolymath/burble[burble], and
-https://github.com/hyperpolymath/gossamer[gossamer].
+PostDisciplinary.jl is the **orchestration hub** for the ecosystem:
+- **Cliodynamics.jl**: Provides historical dynamics data (`LinkedEntity` with `kind=:historical_event`)
+- **Causals.jl**: Provides causal model data (`LinkedEntity` with `kind=:causal_graph`)
+- **Axiom.jl**: Provides formal proofs (`LinkedEntity` with `kind=:proof`)
+- **InvestigativeJournalist.jl**: Evidence source (planned integration)
+- **Axiology.jl**: Value systems (planned integration)
+
+All integrations use the `LinkedEntity` ontology. Same orchestration pattern used in `hypatia` (CI/CD meta-layer).
 
 == File Map
 
-[cols="1,2"]
+[cols="1,3"]
 |===
 | Path | What's There
 
-| `src/` | Source code
-| `ffi/` | Foreign function interface
-| `test(s)/` | Test suite
+| `src/PostDisciplinary.jl` | Module entry point; defines `LinkedEntity` (lines 78-88) and `ResearchProject` (lines 94-108) ontology; exports 18 core types and functions
+| `src/consensus/raft.jl` | Raft consensus for multi-agent knowledge synthesis (imported via `RaftConsensus` submodule, line 31)
+| `src/meta_analysis.jl` | Effect size aggregation and heterogeneity Q-testing (lines 32, 63: `EffectSize`, `aggregate_effects`, `heterogeneity_q`)
+| `src/methodology.jl` | Research strategy types: `MultiDisciplinary`, `InterDisciplinary`, `TransDisciplinary`, `AntiDisciplinary`; execution via `execute_strategy` (line 66)
+| `src/storage/verisim.jl` | VeriSimDB bridge: `VeriSimClient`, `store_hexad`, `vql_query` (lines 51, 68-69)
+| `src/storage/lithoglyph.jl` | Lithoglyph persistence: `LithoglyphClient`, `store_glyph`, `find_symbol` (lines 52, 68-69)
+| `src/synthesis/triangulation.jl` | Multi-method data convergence: `triangulate_findings`, `CorrelationReport` (line 70)
+| `src/synthesis/evolutionary.jl` | Evolutionary synthesis: `evolutionary_link`, `AxiologicalAlignment` (line 71)
+| `src/synthesis/experts.jl` | Expert routing and delegation: `ExpertRouter`, `GraphOfThought`, `route_to_discipline`, `evolve_thought!` (line 71)
+| `src/synthesis/hermeneutics.jl` | Hermeneutic circle interpretation: `HermeneuticCircle`, `interpret_part`, `synthesize_context` (line 72)
+| `src/synthesis/templates.jl` | Research project scaffolding: `ResearchTemplate`, `WickedProblem`, `StructuralForensics`, `ActionResearch`, `scaffold_project` (line 75)
+| `src/methodology/mixed_methods.jl` | Mixed-methods research design: `ResearchDesign`, `QuantDesign`, `QualDesign`, `MixedDesign`, `run_design` (line 57, 73)
+| `src/impact/knowledge_transfer.jl` | Impact measurement: `ImpactRecord`, `log_utilisation`, `measure_influence` (line 74)
+| `src/synthesis/diffing.jl` | Knowledge graph diffing: `diff_knowledge_graphs`, `KnowledgeDiff` (line 65)
 |===
+
+== Critical Invariants (What Must Not Break)
+
+1. Every entity in the graph must have a unique UUID and valid `source_library` symbol
+2. The `LinkedEntity` ontology must remain stable—adding fields breaks backward compatibility
+3. All cross-library integrations must use UUID references, not hard-coded object pointers
+4. Synthesis reports must always be reproducible given the same input graph
 
 == Questions?
 
-Open an issue or reach out directly — happy to explain anything in more detail.
+For orchestration patterns, see `ResearchProject` constructor (line 100) and `add_link!` function (line 126).
+For discipline-specific examples, see integration tests in `test/integration_test.jl` (when added).
+For formal ontology specification, see the A2ML manifest (`.machine_readable/META.a2ml`).
