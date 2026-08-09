@@ -30,7 +30,6 @@ using JSON3
 
 include("consensus/raft.jl")
 include("meta_analysis.jl")
-include("synthesis/diffing.jl")
 include("memetics.jl")
 include("methodology.jl")
 include("storage/verisim.jl")
@@ -45,7 +44,6 @@ include("synthesis/templates.jl")
 
 using .RaftConsensus
 using .MetaAnalysis
-using .KnowledgeDiffing
 using .Memetics
 using .Methodology
 using .VeriSimBridge
@@ -149,5 +147,10 @@ function generate_synthesis(p::ResearchProject)
         graph_density = density(p.graph.graph)
     )
 end
+
+# KnowledgeDiffing refers to the public ResearchProject and LinkedEntity types,
+# so load it after those types have been defined.
+include("synthesis/diffing.jl")
+using .KnowledgeDiffing
 
 end # module
