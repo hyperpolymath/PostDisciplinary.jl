@@ -2,8 +2,8 @@
 git clone https://github.com/hyperpolymath/PostDisciplinary.jl.git
 cd PostDisciplinary.jl
 
-# Using Nix (recommended for reproducibility)
-nix develop
+# Using Guix (recommended for reproducibility)
+guix develop
 
 # Or using toolbox/distrobox
 toolbox create PostDisciplinary.jl-dev
@@ -45,7 +45,7 @@ PostDisciplinary.jl/
 ├── MAINTAINERS.md
 ├── README.adoc
 ├── SECURITY.md
-├── flake.nix            # Nix flake — fallback (Perimeter 1)
+├── flake.guix            # Guix flake — fallback (Perimeter 1)
 ├── guix.scm             # Guix package — primary (Perimeter 1)
 └── Justfile             # Task runner (Perimeter 1)
 ```
