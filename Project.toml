@@ -1,7 +1,7 @@
 name = "PostDisciplinary"
 uuid = "f1a9a0dc-9df1-4c08-8f01-4f9031796370"
 authors = ["Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>"]
-version = "0.1.0"
+version = "0.1.1"
 license = "MPL-2.0"
 
 [deps]
@@ -12,6 +12,11 @@ JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
 Dagger = "d58978e5-989f-55fb-8d15-ea34adc7bf54"
 UUIDs = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+Axiology = "868b87ec-ec5d-47a0-ab5f-c8a8ecbd97bd"
+Cladistics = "e3663be0-4771-44aa-b6d0-43b3a6d82e58"
+Cliodynamics = "8d2f3e70-4c6b-5e9c-a3d1-2f8e9c0b1d2e"
 
 [compat]
 julia = "1.10"
@@ -20,6 +25,10 @@ MetaGraphsNext = "0.7"
 DataFrames = "1"
 JSON3 = "1"
 Dagger = "0.18"
+HTTP = "1"
+Axiology = "0.1"
+Cladistics = "0.1"
+Cliodynamics = "1"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
