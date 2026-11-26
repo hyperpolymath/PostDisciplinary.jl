@@ -4,6 +4,7 @@ using PostDisciplinary
 using UUIDs
 using Dates
 using DataFrames
+using HTTP
 
 @testset "PostDisciplinary.jl" begin
 
@@ -24,7 +25,7 @@ using DataFrames
         p = ResearchProject("Climate Justice")
         @test p.name == "Climate Justice"
         @test p.id isa Symbol
-        @test p.graph isa MetaGraphsNext.MetaGraph
+        @test p.graph isa PostDisciplinary.MetaGraphsNext.MetaGraph
     end
 
     @testset "add_link! and generate_synthesis" begin
@@ -188,6 +189,7 @@ using DataFrames
         p = ResearchProject("Strategy Test")
         # execute_strategy returns nothing (prints only); just verify no error
         @test execute_strategy(MultiDisciplinary(), p) === nothing
+        @test execute_strategy(InterDisciplinary(), p) === nothing
         @test execute_strategy(TransDisciplinary(), p) === nothing
         @test execute_strategy(AntiDisciplinary(), p) === nothing
     end
@@ -196,12 +198,26 @@ using DataFrames
     # VeriSimBridge
     # ─────────────────────────────────
     @testset "VeriSimBridge" begin
-        client = VeriSimClient("http://localhost:9090", "test-key")
-        @test client.endpoint == "http://localhost:9090"
-        @test client.api_key == "test-key"
+        # In-process mock of the VeriSimDB HTTP API, so the real request,
+        # retry and parse paths run without an external server.
+        server = HTTP.serve!("127.0.0.1", 0; verbose = false) do req
+            body = req.target == "/api/v1/query" ?
+                "{\"hexads\":[],\"total_count\":0,\"query_time_ms\":0.0}" : "{}"
+            HTTP.Response(200, ["Content-Type" => "application/json"], body)
+        end
+        try
+            port = Int(HTTP.port(server))
+            client = VeriSimClient("http://127.0.0.1:$port", "test-key")
+            @test client.endpoint == "http://127.0.0.1:$port"
+            @test client.api_key == "test-key"
 
-        @test store_hexad(client, Dict(:test => true)) == :stored
-        @test vql_query(client, "SELECT * FROM hexads") == []
+            @test store_hexad(client, Dict(:test => true)) == :stored
+            result = vql_query(client, "SELECT * FROM hexads")
+            @test isempty(result.hexads)
+            @test result.total_count == 0
+        finally
+            close(server)
+        end
     end
 
     # ─────────────────────────────────

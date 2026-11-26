@@ -24,6 +24,11 @@ function execute_strategy(s::MultiDisciplinary, p)
     # Logic to trigger independent runs of Cliodynamics, InvestigativeJournalist, etc.
 end
 
+function execute_strategy(s::InterDisciplinary, p)
+    println("Mode: INTERDISCIPLINARY. Integrating disciplinary perspectives through dialogue... 🤝")
+    # Logic to reconcile findings across disciplines into a shared frame
+end
+
 function execute_strategy(s::TransDisciplinary, p)
     println("Mode: TRANSDISCIPLINARY. Transcending boundaries for unified explanation... 🌌")
     # Logic to link all nodes into a unified ontology (VeriSimDB)

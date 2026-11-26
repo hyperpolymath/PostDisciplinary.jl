@@ -139,10 +139,12 @@ Produces a unified report summarizing the connections between disciplines.
 function generate_synthesis(p::ResearchProject)
     println("Synthesizing Knowledge Graph: $(p.name) 🧠")
     
+    # MetaGraphsNext 0.7 stores vertex data privately; read it through labels().
+    entities = [p.graph[l] for l in labels(p.graph)]
     df = DataFrame(
-        Origin = [v.source_library for v in values(p.graph.vertex_data)],
-        Kind = [v.kind for v in values(p.graph.vertex_data)],
-        Metadata = [v.metadata for v in values(p.graph.vertex_data)]
+        Origin = [v.source_library for v in entities],
+        Kind = [v.kind for v in entities],
+        Metadata = [v.metadata for v in entities]
     )
     
     return (
