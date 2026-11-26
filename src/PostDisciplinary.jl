@@ -110,6 +110,7 @@ export ResearchDesign, QuantDesign, QualDesign, MixedDesign, run_design
 export ImpactRecord, log_utilisation, measure_influence
 export ResearchTemplate, WickedProblem, StructuralForensics, ActionResearch, scaffold_project
 
+"""
     @link project begin ... end
 Syntactic sugar for connecting outputs from multiple libraries into a project graph.
 """
