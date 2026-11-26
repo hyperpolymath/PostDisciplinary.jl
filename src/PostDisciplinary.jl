@@ -28,6 +28,44 @@ using DataFrames
 using UUIDs
 using JSON3
 
+# Core types are defined and exported before the submodules are included: the
+# submodules do `using ..PostDisciplinary` and reference these types at load time.
+export ResearchProject, LinkedEntity
+
+"""
+    LinkedEntity
+A universal entity that can represent a Claim, Proof, Model, or Event 
+from any .jl library in the ecosystem.
+"""
+struct LinkedEntity
+    id::UUID
+    source_library::Symbol
+    original_id::Symbol
+    kind::Symbol
+    metadata::Dict{Symbol, Any}
+end
+
+"""
+    ResearchProject
+A meta-container for cross-disciplinary research.
+"""
+struct ResearchProject
+    id::Symbol
+    name::String
+    graph::MetaGraph
+end
+
+function ResearchProject(name::String)
+    g = MetaGraph(
+        SimpleGraph(),
+        label_type=UUID,
+        vertex_data_type=LinkedEntity,
+        edge_data_type=Dict{Symbol, Any},
+        graph_data=name
+    )
+    return ResearchProject(gensym("project"), name, g)
+end
+
 include("consensus/raft.jl")
 include("meta_analysis.jl")
 include("memetics.jl")
@@ -72,41 +110,6 @@ export ResearchDesign, QuantDesign, QualDesign, MixedDesign, run_design
 export ImpactRecord, log_utilisation, measure_influence
 export ResearchTemplate, WickedProblem, StructuralForensics, ActionResearch, scaffold_project
 
-"""
-    LinkedEntity
-A universal entity that can represent a Claim, Proof, Model, or Event 
-from any .jl library in the ecosystem.
-"""
-struct LinkedEntity
-    id::UUID
-    source_library::Symbol
-    original_id::Symbol
-    kind::Symbol
-    metadata::Dict{Symbol, Any}
-end
-
-"""
-    ResearchProject
-A meta-container for cross-disciplinary research.
-"""
-struct ResearchProject
-    id::Symbol
-    name::String
-    graph::MetaGraph
-end
-
-function ResearchProject(name::String)
-    g = MetaGraph(
-        SimpleGraph(),
-        label_type=UUID,
-        vertex_data_type=LinkedEntity,
-        edge_data_type=Dict{Symbol, Any},
-        graph_data=name
-    )
-    return ResearchProject(gensym("project"), name, g)
-end
-
-"""
     @link project begin ... end
 Syntactic sugar for connecting outputs from multiple libraries into a project graph.
 """
