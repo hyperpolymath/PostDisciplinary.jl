@@ -5,6 +5,7 @@ using UUIDs
 using Dates
 using DataFrames
 using HTTP
+using Sockets
 
 @testset "PostDisciplinary.jl" begin
 
@@ -200,13 +201,15 @@ using HTTP
     @testset "VeriSimBridge" begin
         # In-process mock of the VeriSimDB HTTP API, so the real request,
         # retry and parse paths run without an external server.
-        server = HTTP.serve!("127.0.0.1", 0; verbose = false) do req
+        port, probe = Sockets.listenany(ip"127.0.0.1", 18000)
+        close(probe)
+        port = Int(port)
+        server = HTTP.serve!("127.0.0.1", port; verbose = false) do req
             body = req.target == "/api/v1/query" ?
                 "{\"hexads\":[],\"total_count\":0,\"query_time_ms\":0.0}" : "{}"
             HTTP.Response(200, ["Content-Type" => "application/json"], body)
         end
         try
-            port = Int(HTTP.port(server))
             client = VeriSimClient("http://127.0.0.1:$port", "test-key")
             @test client.endpoint == "http://127.0.0.1:$port"
             @test client.api_key == "test-key"
