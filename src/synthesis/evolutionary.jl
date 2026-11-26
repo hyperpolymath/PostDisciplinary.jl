@@ -22,7 +22,7 @@ end
     check_value_drift(project, value_system)
 Uses Axiology.jl to check if a research project's findings align with a chosen ethics profile.
 """
-function check_value_drift(p::ResearchProject, ethics::Axiology.ValueSystem)
+function check_value_drift(p::ResearchProject, ethics::Axiology.Value)
     println("Checking Post-Disciplinary Value Drift... ⚖️")
     # Link findings to Axiology validation
     return :aligned
