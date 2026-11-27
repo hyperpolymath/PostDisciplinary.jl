@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MPL-2.0
+# Manifest for this repository (schema proven/manifest/v1); see
+# hyperpolymath/proven-cicd-and-workflows docs/PROVEN-ADOPTION.adoc.
+#
+# Detected: julia (Project.toml, src/, test/, benches/), zig (ffi/zig/build.zig),
+# shell (setup.sh). Neither julia nor a working zig build is runnable by the
+# umbrella in release 0.1, so each is accounted for below rather than passed.
+#
+# NOTE: the Justfile `test` and `build` recipes are unfilled template stubs that
+# only echo "passed". The umbrella prefers a justfile recipe over a language
+# default, so they would give a vacuous pass; every category below is therefore
+# stated explicitly and none relies on the Justfile.
+
+schema = "proven/manifest/v1"
+
+[languages.ignore.julia]
+reason = "the umbrella cannot provision julia in release 0.1. A real suite exists: test/runtests.jl (plus test/e2e_test.jl, test/property_test.jl) and benches/benchmarks.jl, run by .github/workflows/ci.yml on Julia 1.10 and 1.11 via Pkg.test(). It is not exercised by proven until a julia runner lands."
+
+[languages.ignore.shell]
+reason = "one bootstrap script (setup.sh: platform detection, installs just). It has no tests and nothing for the umbrella to run."
+
+# ffi/zig is an unrendered RSR scaffold: build.zig and src/main.zig use the literal
+# placeholder {{project}} (library name, header path, extern fn names), and
+# include/{{project}}.h does not exist. `zig build` and `zig build test` cannot
+# succeed until the template is rendered, so these are visible, expiring waivers.
+# They are not N/A: a real FFI layer is intended (see ABI-FFI-README.adoc).
+[categories.unit.zig.waiver]
+reason = "ffi/zig is an unrendered scaffold ({{project}} placeholders in build.zig, src/main.zig and test/integration_test.zig); zig build test cannot compile until it is rendered"
+until = "2026-12-31"
+[categories.build.zig.waiver]
+reason = "ffi/zig is an unrendered scaffold; build.zig references include/{{project}}.h which does not exist"
+until = "2026-12-31"
+[categories.smoke.zig.waiver]
+reason = "no smoke test exists for the zig FFI, and the scaffold does not compile (see unit)"
+until = "2026-12-31"
+[categories.p2p.zig.waiver]
+reason = "no inter-component test exists for the zig FFI; the FFI is not yet wired to the Julia package (see unit)"
+until = "2026-12-31"
+
+# No [bench.*]: benches/benchmarks.jl is a BenchmarkTools SUITE that needs julia,
+# which the umbrella cannot provision in release 0.1, so a bench target here would
+# fail rather than measure. Add one when a julia runner exists.
